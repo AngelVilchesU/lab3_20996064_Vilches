@@ -34,28 +34,30 @@ public class Main {
         paradigmaDocs.register(user5.getNombreUsuario(), user5.getContraseniaUsuario(), user5.getSesion());
 
         // Creacion de diez documentos (inicialmente)
-        ArrayList<Acceso> listaAccesos = new ArrayList<>();
-        ArrayList<Version> listaVersiones = new ArrayList<>();
-        paradigmaDocs.crearDocumento(user1, 0, "Documento 0", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 0");
-        paradigmaDocs.crearDocumento(user1, 1, "Documento 1", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 1");
-        paradigmaDocs.crearDocumento(user2, 2, "Documento 2", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 2");
-        paradigmaDocs.crearDocumento(user2, 3, "Documento 3", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 3");
-        paradigmaDocs.crearDocumento(user3, 4, "Documento 4", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 4");
-        paradigmaDocs.crearDocumento(user3, 5, "Documento 5", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 5");
-        paradigmaDocs.crearDocumento(user4, 6, "Documento 6", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 6");
-        paradigmaDocs.crearDocumento(user4, 7, "Documento 7", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 7");
-        paradigmaDocs.crearDocumento(user5, 8, "Documento 8", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 8");
-        paradigmaDocs.crearDocumento(user5, 9, "Documento 9", fechaCreacion,
-                listaVersiones, listaAccesos, "Primer contenido del documento de ID 9");
+        paradigmaDocs.login(user1.getNombreUsuario(), user1.getContraseniaUsuario(), user1.getSesion());
+        paradigmaDocs.create("Documento 0", "Primer contenido del documento de ID 0");
+        paradigmaDocs.create("Documento 1", "Primer contenido del documento de ID 1");
+        paradigmaDocs.logout();
+
+        paradigmaDocs.login(user2.getNombreUsuario(), user2.getContraseniaUsuario(), user2.getSesion());
+        paradigmaDocs.create("Documento 2", "Primer contenido del documento de ID 2");
+        paradigmaDocs.create("Documento 3", "Primer contenido del documento de ID 3");
+        paradigmaDocs.logout();
+
+        paradigmaDocs.login(user3.getNombreUsuario(), user3.getContraseniaUsuario(), user3.getSesion());
+        paradigmaDocs.create("Documento 4", "Primer contenido del documento de ID 4");
+        paradigmaDocs.create("Documento 5", "Primer contenido del documento de ID 5");
+        paradigmaDocs.logout();
+
+        paradigmaDocs.login(user4.getNombreUsuario(), user4.getContraseniaUsuario(), user4.getSesion());
+        paradigmaDocs.create("Documento 6", "Primer contenido del documento de ID 6");
+        paradigmaDocs.create("Documento 7", "Primer contenido del documento de ID 7");
+        paradigmaDocs.logout();
+
+        paradigmaDocs.login(user5.getNombreUsuario(), user5.getContraseniaUsuario(), user5.getSesion());
+        paradigmaDocs.create("Documento 8", "Primer contenido del documento de ID 8");
+        paradigmaDocs.create("Documento 9", "Primer contenido del documento de ID 9");
+        paradigmaDocs.logout();
 
 
 
@@ -71,18 +73,25 @@ public class Main {
 
 
 
-
+/*
         Scanner entrada = new Scanner(System.in);
         boolean cerrarPrograma = false;
         int eleccion;
 
         while(!cerrarPrograma){
+            // Se refleja por pantella la existencia (o no) de un usuario autenticado
+            if(paradigmaDocs.existeUsuarioActivo()){
+                System.out.println("Usuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
+            }
+            else {
+                System.out.println("Usuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
+            }
             System.out.println("Escoja una de las siguientes opciones");
             System.out.println("Para registrar un nuevo usuario ingrese: 1");
             System.out.println("Para autenticar un usuario ingrese: 2");
             System.out.println("Para cerrar sesion de usuario ingrese: 3");
-            System.out.println("Para restaurar la version de un documento selecciones el entero 4");
-            System.out.println("Para revorcar el acceso a un documento selecciones el entero 5");
+            System.out.println("Para crear un nuevo documento ingrese: 4");
+            System.out.println("Para compartir un documento ingrese: 5");
             System.out.println("Para buscar en los documentos selecciones el entero 6");
             System.out.println("Para visualizar documentos selecciones el entero 7");
             System.out.println("Para cerrar sesion selecciones el entero 8");
@@ -130,9 +139,38 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Se ha seleccionado la opcion 4");
+                    // Inicialmente se verifica la existencia de un usuario registrado activo
+                    if(paradigmaDocs.existeUsuarioActivo()){
+                        Scanner parametrosCase4 = new Scanner(System.in);
+                        System.out.println("Introduzca el nombre del documento (String): ");
+                        String nombreDocumentoCase4 = parametrosCase4.nextLine();
+                        System.out.println("Introduzca el contenido del documento (String): ");
+                        String textoContenidoCase4 = parametrosCase4.nextLine();
+
+                        paradigmaDocs.create(nombreDocumentoCase4, textoContenidoCase4);
+                        System.out.println("Se ha creado/registrado un nuevo documento existosamente");
+                        System.out.println("\n");
+                    }
+                    else {
+                        System.out.println("No se ha creado/registrado un nuevo documento (usuario inexistente o no autenticado)");
+                    }
                     break;
                 case 5:
                     System.out.println("Se ha seleccionado la opcion 5");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     break;
                 case 6:
                     System.out.println("Se ha seleccionado la opcion 6");
@@ -153,7 +191,7 @@ public class Main {
         }
         System.out.println("Ha concluido la ejecucion del programa");
 
-
+*/
         System.out.println(paradigmaDocs);
     }
 }

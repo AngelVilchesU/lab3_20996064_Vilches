@@ -42,6 +42,28 @@ public class ParadigmaDocs {
         return false;
     }
 
+    // Metodo que permite determinar si existe un usuario activo
+    public boolean existeUsuarioActivo(){
+        int i = 0;
+        for(i = 0; i < this.listaUsuarios.size(); i ++){
+            if(this.listaUsuarios.get(i).getSesion() == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Metodo que permite retornar el nombre de un usuario activo
+    public String nombreUsuarioActivo(){
+        int i = 0;
+        for(i = 0; i < this.listaUsuarios.size(); i ++){
+            if(this.listaUsuarios.get(i).getSesion() == 1){
+                return this.listaUsuarios.get(i).getNombreUsuario();
+            }
+        }
+        return "No existe usuario activo";
+    }
+
     // Metodo que permite el registro de un usuario en la plataforma
     public boolean register(String nombreUsuario, String contraseniaUsuario, int sesion){
         // Se crea un usuario nuevo
@@ -62,8 +84,6 @@ public class ParadigmaDocs {
         // Se crea un usuario nuevo
         Usuario usuarioNuevo = new Usuario();
         usuarioNuevo.Usuario(nombreUsuario, contraseniaUsuario, sesion);
-        System.out.println(usuarioNuevo);
-        System.out.println(listaUsuarios);
         // Se evalua la existencia del mismo en la plataforma para ser agregado, o no
         if(this.existeUsuario(usuarioNuevo)){
             int indice;
@@ -107,6 +127,24 @@ public class ParadigmaDocs {
         ArrayList<Version> listaVersionesNueva = new ArrayList<>();
         listaVersionesNueva.add(nuevaVersion);
         nuevoDocumento.Documento(iDdocumento, usuario.getNombreUsuario(), nombreDocumento, fechaCreacion, listaVersionesNueva, listaAccesos);
+        this.listaDocumentos.add(nuevoDocumento);
+    }
+
+    // Metodo que permite la creacion de un nuevo documento en la plataforma validando la autenticacion del usuario
+    public void create(String nombreDocumento, String textoContenido){
+        Date fechaCreacion = new Date();
+        int iDdocumento = listaDocumentos.size();
+        int iDversion = 0;
+        String autor = nombreUsuarioActivo();
+        Documento nuevoDocumento = new Documento();
+        Version versionInicial = new Version();
+        Acceso accesos = new Acceso();
+        ArrayList<Version> listaVersionesInicial = new ArrayList<>();
+        ArrayList<Acceso> listaAccesosInicial = new ArrayList<>();
+        versionInicial.Version(iDversion, textoContenido, fechaCreacion);
+        listaVersionesInicial.add(versionInicial);
+
+        nuevoDocumento.Documento(iDdocumento, autor, nombreDocumento, fechaCreacion, listaVersionesInicial, listaAccesosInicial);
         this.listaDocumentos.add(nuevoDocumento);
     }
 
