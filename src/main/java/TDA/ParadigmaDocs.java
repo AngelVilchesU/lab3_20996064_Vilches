@@ -34,6 +34,7 @@ public class ParadigmaDocs {
         return false;
     }
 
+
     // Metodo que permite determinar si un usuario figura como autor de un documento de acuerdo a su identificador
     public boolean existeDocumentoAutor(int iDdocumento, String autor){
         int i = 0;
@@ -44,6 +45,24 @@ public class ParadigmaDocs {
         }
         return false;
     }
+
+    // Metodo que permite determinar si un usuario figura como autor de un documento de acuerdo a su identificador
+    public boolean existeDocumentoEditor(ArrayList<Acceso> listaAccesos, String editor){
+        int i = 0;
+        char permisoEditor = 'W';
+
+        for(i = 0; i < listaAccesos.size(); i ++){
+            System.out.println("//////////////////////////////////////////");
+            System.out.println("ACCESOS DATOS:" + editor + permisoEditor );
+            System.out.println("LISTA ACCESOS: " + listaAccesos);
+            System.out.println("RESULTADO COMPARACION: " + listaAccesos.get(i).getNombreUsuario().equals(editor) + listaAccesos.get(i).getTipoAcceso() + permisoEditor);
+            if(listaAccesos.get(i).getNombreUsuario().equals(editor) && listaAccesos.get(i).getTipoAcceso() == permisoEditor){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // Metodo que permite determinar la existencia de un nombre de usuario
     public boolean existeNombreUsuario(String nombreUsuario){
@@ -183,6 +202,32 @@ public class ParadigmaDocs {
             System.out.println("El documento no ha sido compartido");
         }
     }
+
+    // Metodo que permite añadir texto al final de la version activa de un documento
+    // Enfatizando en la existencia de permisos u accesos de edición y/o presencia de autor
+    public void add(int iDdocumento, String textoContenido){
+        // Se busca el documento de acuerdo a su identificador
+        int i = 0;
+
+        for(i = 0; i < this.listaDocumentos.size(); i ++){
+            if(this.listaDocumentos.get(i).getiDdocumento() == iDdocumento){
+                if(existeDocumentoAutor(iDdocumento, nombreUsuarioActivo()) || existeDocumentoEditor(this.listaDocumentos.get(i).getListaAccesos(), nombreUsuarioActivo())) {
+                    Version nuevaVersion = new Version();
+                    String textoUltimaVersion;
+                    String textoConcatenado;
+                    Date fechaModificacion = new Date();
+                    int longitudVersiones = this.listaDocumentos.get(i).getListaVersiones().size() - 1;
+                    textoUltimaVersion = this.listaDocumentos.get(i).getListaVersiones().get(longitudVersiones).getTextoContenido();
+                    textoConcatenado = textoUltimaVersion + textoContenido;
+                    nuevaVersion.Version(longitudVersiones+1, textoConcatenado, fechaModificacion);
+                    this.listaDocumentos.get(i).getListaVersiones().add(nuevaVersion);
+                }
+            }
+        }
+    }
+
+    // Metodo que permite restaurar, a un usuario autenticado y que figure como autor del documento referenciado, ...
+    // una version anterior de un documento
 
 
     @Override

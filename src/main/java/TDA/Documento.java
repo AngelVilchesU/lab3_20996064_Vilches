@@ -34,6 +34,10 @@ public class Documento {
         return autor;
     }
 
+    public ArrayList<Version> getListaVersiones(){
+        return listaVersiones;
+    }
+
     public ArrayList<Acceso> getListaAccesos(){
         return listaAccesos;
     }

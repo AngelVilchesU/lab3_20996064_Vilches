@@ -66,9 +66,6 @@ public class Main {
 
 
 
-
-
-
         Scanner entrada = new Scanner(System.in);
         boolean cerrarPrograma = false;
         int eleccion;
@@ -87,7 +84,7 @@ public class Main {
             System.out.println("Para cerrar sesion de usuario ingrese: 3");
             System.out.println("Para crear un nuevo documento ingrese: 4");
             System.out.println("Para compartir un documento ingrese: 5");
-            System.out.println("Para buscar en los documentos selecciones el entero 6");
+            System.out.println("Para aniadir texto a un documentos ingrese: 6");
             System.out.println("Para visualizar documentos selecciones el entero 7");
             System.out.println("Para cerrar sesion selecciones el entero 8");
             System.out.println("Para cerrar el programa selecciones el entero 9");
@@ -214,10 +211,20 @@ public class Main {
                 case 6:
                     System.out.println("Se ha seleccionado la opcion 6");
 
+                    if(paradigmaDocs.existeUsuarioActivo()) {
 
+                        Scanner parametrosCase6 = new Scanner(System.in);
+                        System.out.println("Ingrese el identificador del documento a editar: ");
+                        int iDdocumentoCase6 = entrada.nextInt();
+                        System.out.println("Ingrese el contenido a adicionar (String): ");
+                        String textoContenidoCase6 = parametrosCase6.nextLine();
 
+                        paradigmaDocs.add(iDdocumentoCase6, textoContenidoCase6);
 
-
+                    }
+                    else {
+                        System.out.println("No se ha compartido el documento (usuario inexistente o no autenticado)");
+                    }
 
 
 

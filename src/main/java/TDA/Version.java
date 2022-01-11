@@ -16,6 +16,13 @@ public class Version {
         return this;
     }
 
+    // Metodos
+
+
+    public String getTextoContenido() {
+        return textoContenido;
+    }
+
     @Override
     public String toString() {
         return "Version{" +

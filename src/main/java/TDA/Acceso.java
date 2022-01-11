@@ -16,6 +16,13 @@ public class Acceso {
     }
 
     // Metodos
+    public String getNombreUsuario(){
+        return nombreUsuario;
+    }
+
+    public char getTipoAcceso() {
+        return tipoAcceso;
+    }
 
     // Metodo que permite determinar si un tipo de acceso es valido o no
     public boolean accesoValido(char tipoAcceso){
