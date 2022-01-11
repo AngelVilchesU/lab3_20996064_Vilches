@@ -105,6 +105,14 @@ public class ParadigmaDocs {
         return "No existe usuario activo";
     }
 
+    // Metodo que permite ordenar los identificadores de la lista u arreglo de versiones
+    private void correlativo(ArrayList<Version> listaVersiones){
+        int i;
+        for (i = 0; i < listaVersiones.size(); i ++){
+            listaVersiones.get(i).setiDversion(i);
+        }
+    }
+
     // Metodo que permite el registro de un usuario en la plataforma
     public boolean register(String nombreUsuario, String contraseniaUsuario, int sesion){
         // Se crea un usuario nuevo
@@ -221,6 +229,7 @@ public class ParadigmaDocs {
                     textoConcatenado = textoUltimaVersion + textoContenido;
                     nuevaVersion.Version(longitudVersiones+1, textoConcatenado, fechaModificacion);
                     this.listaDocumentos.get(i).getListaVersiones().add(nuevaVersion);
+
                 }
             }
         }
@@ -228,7 +237,54 @@ public class ParadigmaDocs {
 
     // Metodo que permite restaurar, a un usuario autenticado y que figure como autor del documento referenciado, ...
     // una version anterior de un documento
+    public void rollback(int iDdocumento, int iDversion){
+        // Se busca el documento de acuerdo a su identificador
+        int i = 0;
 
+        for(i = 0; i < this.listaDocumentos.size(); i ++){
+            if(this.listaDocumentos.get(i).getiDdocumento() == iDdocumento){
+                // Si el usuario que ha ejecutado el presente metodo figura como autor del texto...
+                if(existeDocumentoAutor(iDdocumento, nombreUsuarioActivo())) {
+                    // Se busca la version y, en caso de encontrarla esta es respaldada, removida ...
+                    // e insertada al final de la lista u arreglo de versiones como la version actual
+                    int j = 0;
+
+                    int iDultimaversion = this.listaDocumentos.get(i).getListaVersiones().size() - 1;
+                    for (j = 0; j < this.listaDocumentos.get(i).getListaVersiones().size(); j ++){
+                        if(this.listaDocumentos.get(i).getListaVersiones().get(j).getiDversion() == iDversion){
+                            Version versionRollback = new Version();
+                            Date fechaModificacion = new Date();
+                            versionRollback.Version(this.listaDocumentos.get(i).getListaVersiones().get(j).getiDversion(), this.listaDocumentos.get(i).getListaVersiones().get(j).getTextoContenido(), fechaModificacion);
+                            this.listaDocumentos.get(i).getListaVersiones().remove(j);
+                            this.listaDocumentos.get(i).getListaVersiones().add(versionRollback);
+                            // Se corrigen los identificadores internos para que estos sean correlativos una vez ...
+                            // realizada la operacion
+                            correlativo(this.listaDocumentos.get(i).getListaVersiones());
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    // Metodo que permite a un usuario autor de un documento determinado revocar/remover todos ...
+    // los accesos hacia su documento
+    public void revokeAccess(int iDdocumento){
+        // Se busca el documento de acuerdo a su identificador
+        int i = 0;
+
+        for(i = 0; i < this.listaDocumentos.size(); i ++){
+            if(this.listaDocumentos.get(i).getiDdocumento() == iDdocumento){
+                // Si el usuario que ha ejecutado el presente metodo figura como autor del texto...
+                if(existeDocumentoAutor(iDdocumento, nombreUsuarioActivo())) {
+                    Acceso accesosRevocado = new Acceso();
+                    System.out.println(this.listaDocumentos.get(i).getListaAccesos());
+                    this.listaDocumentos.get(i).getListaAccesos().clear();
+                }
+            }
+        }
+    }
 
     @Override
     public String toString() {

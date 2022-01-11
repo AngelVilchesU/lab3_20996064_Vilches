@@ -85,8 +85,8 @@ public class Main {
             System.out.println("Para crear un nuevo documento ingrese: 4");
             System.out.println("Para compartir un documento ingrese: 5");
             System.out.println("Para aniadir texto a un documentos ingrese: 6");
-            System.out.println("Para visualizar documentos selecciones el entero 7");
-            System.out.println("Para cerrar sesion selecciones el entero 8");
+            System.out.println("Para ejecutar el metodo rollback a la version de un documento ingrese: 7");
+            System.out.println("Para revocar los accesos a un documento ingrese: 8");
             System.out.println("Para cerrar el programa selecciones el entero 9");
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
@@ -223,7 +223,40 @@ public class Main {
 
                     }
                     else {
-                        System.out.println("No se ha compartido el documento (usuario inexistente o no autenticado)");
+                        System.out.println("No se ha aniadido texto al documento (usuario inexistente o no autenticado)");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Se ha seleccionado la opcion 7");
+
+                    if(paradigmaDocs.existeUsuarioActivo()) {
+
+                        Scanner parametrosCase7 = new Scanner(System.in);
+                        System.out.println("Ingrese el identificador del documento sobre el cual operar: ");
+                        int iDdocumentoCase7 = entrada.nextInt();
+                        System.out.println("Ingrese el identificar de la version a restaurar: ");
+                        int iDversionCase7 = parametrosCase7.nextInt();
+
+                        paradigmaDocs.rollback(iDdocumentoCase7, iDversionCase7);
+
+                    }
+                    else {
+                        System.out.println("No se ha restaurado la version del documento (usuario inexistente o no autenticado)");
+                    }
+                    break;
+                case 8:
+                    System.out.println("Se ha seleccionado la opcion 8");
+
+                    if(paradigmaDocs.existeUsuarioActivo()) {
+
+                        System.out.println("Ingrese el identificador del documento sobre el cual operar: ");
+                        int iDdocumentoCase8 = entrada.nextInt();
+
+                        paradigmaDocs.revokeAccess(iDdocumentoCase8);
+
+                    }
+                    else {
+                        System.out.println("No se ha restaurado la version del documento (usuario inexistente o no autenticado)");
                     }
 
 
@@ -238,12 +271,26 @@ public class Main {
 
 
 
-                    break;
-                case 7:
-                    System.out.println("Se ha seleccionado la opcion 7");
-                    break;
-                case 8:
-                    System.out.println("Se ha seleccionado la opcion 8");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     break;
                 case 9:
                     System.out.println("Se ha seleccionado la opcion 9");

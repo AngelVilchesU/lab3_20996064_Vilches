@@ -18,9 +18,16 @@ public class Version {
 
     // Metodos
 
+    public int getiDversion(){
+        return iDversion;
+    }
 
-    public String getTextoContenido() {
+    public String getTextoContenido(){
         return textoContenido;
+    }
+
+    public void setiDversion(int iDversion){
+        this.iDversion = iDversion;
     }
 
     @Override
@@ -31,6 +38,8 @@ public class Version {
                 ", fechaModificacion=" + fechaModificacion +
                 '}';
     }
+
+
 
     // Metodos
 }
