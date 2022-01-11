@@ -24,6 +24,20 @@ public class Documento {
         return this;
     }
 
+    // Metodos
+
+    public int getiDdocumento(){
+        return iDdocumento;
+    }
+
+    public String getAutor(){
+        return autor;
+    }
+
+    public ArrayList<Acceso> getListaAccesos(){
+        return listaAccesos;
+    }
+
     @Override
     public String toString() {
         return "Documento{" +

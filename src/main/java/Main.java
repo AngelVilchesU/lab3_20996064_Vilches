@@ -60,6 +60,7 @@ public class Main {
         paradigmaDocs.logout();
 
 
+        // Menu interactivo
 
 
 
@@ -68,12 +69,6 @@ public class Main {
 
 
 
-
-
-
-
-
-/*
         Scanner entrada = new Scanner(System.in);
         boolean cerrarPrograma = false;
         int eleccion;
@@ -158,22 +153,84 @@ public class Main {
                 case 5:
                     System.out.println("Se ha seleccionado la opcion 5");
 
+                    // Inicialmente se verifica la existencia de un usuario registrado activo
+                    if(paradigmaDocs.existeUsuarioActivo()) {
 
+                        boolean nuevoCompartido = false;
+                        int agregarCompartido;
+                        ArrayList<String> listaUsuariosCompartir = new ArrayList<>();
+                        Scanner parametrosCase5 = new Scanner(System.in);
 
+                        while (!nuevoCompartido) {
 
+                            Scanner parametrosCase5w = new Scanner(System.in);
+                            System.out.println("Ingrese el nombre de usuario a compartir su documento: ");
+                            String nombreUsuarioCase5 = parametrosCase5w.nextLine();
+                            System.out.println("\n");
+                            System.out.println("Si desea agregar otro usuario introduzca: 1");
+                            System.out.println("Si no desea agregar otro usuario introduzca: 0");
+                            agregarCompartido = entrada.nextInt();
 
+                            // Se verifica que el/los usuario/s a compartir exista/n
+                            if (paradigmaDocs.existeNombreUsuario(nombreUsuarioCase5)) {
+                                System.out.println("Es posible compartir el documento al/los usuario/s designado/s");
+                                listaUsuariosCompartir.add(nombreUsuarioCase5);
+                            } else {
+                                System.out.println("No posible compartir el documento al/los usuario/s designado/s");
+                            }
 
+                            switch (agregarCompartido) {
+                                case 0:
+                                    System.out.println("Ha seleccionado: 0");
+                                    nuevoCompartido = true;
+                                    break;
+                                case 1:
+                                    System.out.println("Ha seleccionado: 1");
+                                    break;
+                                default:
+                                    System.out.println("Favor de seleccionar una opcion valida");
+                            }
+                        }
 
+                        System.out.println("Ingrese el identificador numerico del documento a compartir: ");
+                        int iDdocumentoCase5 = parametrosCase5.nextInt();
 
+                        // Se verifica que el usuario autenticado figure como autor del documento
+                        if(paradigmaDocs.existeDocumentoAutor(iDdocumentoCase5, paradigmaDocs.nombreUsuarioActivo())){
+                            System.out.println("Si es posible compartir el documento");
+                            System.out.println("Ingrese el tipo de acceso (R, W o C): ");
+                            char tipoAccesoCase5 = parametrosCase5.next().charAt(0);
 
-
-
-
-
-
+                            paradigmaDocs.share(listaUsuariosCompartir, iDdocumentoCase5, tipoAccesoCase5);
+                        }
+                        else {
+                            System.out.println("No es posible compartir el documento (no existe o usted no su autor)");
+                        }
+                    }
+                    else {
+                        System.out.println("No se ha compartido el documento (usuario inexistente o no autenticado)");
+                    }
                     break;
                 case 6:
                     System.out.println("Se ha seleccionado la opcion 6");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     break;
                 case 7:
                     System.out.println("Se ha seleccionado la opcion 7");
@@ -191,7 +248,8 @@ public class Main {
         }
         System.out.println("Ha concluido la ejecucion del programa");
 
-*/
+
+        System.out.println("--------------");
         System.out.println(paradigmaDocs);
     }
 }

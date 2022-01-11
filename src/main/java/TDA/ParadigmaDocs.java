@@ -34,6 +34,28 @@ public class ParadigmaDocs {
         return false;
     }
 
+    // Metodo que permite determinar si un usuario figura como autor de un documento de acuerdo a su identificador
+    public boolean existeDocumentoAutor(int iDdocumento, String autor){
+        int i = 0;
+        for(i = 0; i < this.listaDocumentos.size(); i ++){
+            if(this.listaDocumentos.get(i).getiDdocumento() == iDdocumento && this.listaDocumentos.get(i).getAutor().equals(autor)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Metodo que permite determinar la existencia de un nombre de usuario
+    public boolean existeNombreUsuario(String nombreUsuario){
+        int i = 0;
+        for(i = 0; i < this.listaUsuarios.size(); i ++){
+            if(this.listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuario)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Metodo que permite determinar si un usuario determinado se encuentra activo
     private boolean esUsuarioActivo(Usuario usuario){
         if(usuario.getSesion() == 1){
@@ -114,22 +136,6 @@ public class ParadigmaDocs {
         return false;
     }
 
-    // Metodo que permite crear e insertar un documento al editor y/o plataforma
-    // Es importante comentar que su uso esta reservado unicamente a la definicion de documentos...
-    // inicial en la plataforma
-    public void crearDocumento(Usuario usuario, int iDdocumento, String nombreDocumento, Date fechaCreacion,
-                               ArrayList listaVersiones, ArrayList listaAccesos, String textoContenido){
-
-        Documento nuevoDocumento = new Documento();
-        Version nuevaVersion = new Version();
-        int iDversion = listaVersiones.size();
-        nuevaVersion.Version(iDversion, textoContenido, fechaCreacion);
-        ArrayList<Version> listaVersionesNueva = new ArrayList<>();
-        listaVersionesNueva.add(nuevaVersion);
-        nuevoDocumento.Documento(iDdocumento, usuario.getNombreUsuario(), nombreDocumento, fechaCreacion, listaVersionesNueva, listaAccesos);
-        this.listaDocumentos.add(nuevoDocumento);
-    }
-
     // Metodo que permite la creacion de un nuevo documento en la plataforma validando la autenticacion del usuario
     public void create(String nombreDocumento, String textoContenido){
         Date fechaCreacion = new Date();
@@ -146,6 +152,36 @@ public class ParadigmaDocs {
 
         nuevoDocumento.Documento(iDdocumento, autor, nombreDocumento, fechaCreacion, listaVersionesInicial, listaAccesosInicial);
         this.listaDocumentos.add(nuevoDocumento);
+    }
+
+    // Metodo que permite compartir compartir un documento por parte del usuario autenticado ...
+    // quien tambien debe figurar como autor del escrito de acuerdo con los tipos de acceso ...
+    // y/o permisos lectura ("R"), escritura ("W") o comentario ("C")
+    public void share(ArrayList usuariosCompartir, int iDdocumento, char permiso){
+        ArrayList<Acceso> listaAccesos = new ArrayList<>();
+        Acceso acceso = new Acceso();
+
+        // Si el permiso y/o acceso es valido ("R", "W" o "C")...
+        if(acceso.accesoValido(permiso)) {
+            int i = 0;
+            // Se elabora un arreglo de objetos del tipo Acceso
+            for (i = 0; i < usuariosCompartir.size(); i++) {
+                Acceso aCceso = new Acceso();
+                aCceso.Acceso(usuariosCompartir.get(i).toString(), permiso);
+                listaAccesos.add(aCceso);
+            }
+            // Se busca el documento
+            for(i = 0; i < this.listaDocumentos.size(); i ++){
+                if(this.listaDocumentos.get(i).getiDdocumento() == iDdocumento){
+                    this.listaDocumentos.get(i).getListaAccesos().addAll(listaAccesos);
+                }
+            }
+            System.out.println("El proceso fue completado exitosamente");
+        }
+        else {
+            System.out.println("El acceso y/o permiso no es valido");
+            System.out.println("El documento no ha sido compartido");
+        }
     }
 
 

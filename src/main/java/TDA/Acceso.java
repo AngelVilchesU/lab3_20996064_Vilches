@@ -1,6 +1,7 @@
 package TDA;
 
-import java.util.Date;
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class Acceso {
     // Atributos
@@ -13,6 +14,23 @@ public class Acceso {
         this.tipoAcceso = tipoAcceso;
         return this;
     }
+
+    // Metodos
+
+    // Metodo que permite determinar si un tipo de acceso es valido o no
+    public boolean accesoValido(char tipoAcceso){
+        char leer = 'R';
+        char escribir = 'W';
+        char compartir = 'C';
+
+        if(tipoAcceso == leer || tipoAcceso == escribir || tipoAcceso == compartir){
+            return true;
+        }
+        return false;
+    }
+
+
+
 
     @Override
     public String toString() {
