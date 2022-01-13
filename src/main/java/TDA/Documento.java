@@ -3,6 +3,13 @@ package TDA;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Clase para representar el documento que posee una plataforma.
+ * Cada Documento se encuentra determinada por el identificador del documento, autor, nombre del
+ * documento, fecha de creacion, arreglo de objetos tipo Version y arreglo de objetos tipo Acceso.
+ * @author Angel Vilches
+ */
+
 public class Documento {
     // Atributos
     private int iDdocumento;
@@ -26,22 +33,42 @@ public class Documento {
 
     // Metodos
 
+    /**
+     * EL siguiente metodo permite obtener el dato correspondiente al identificador del documento.
+     * Retorna un int correspondiente al identificador del documento.
+     */
     public int getiDdocumento(){
         return iDdocumento;
     }
 
+    /**
+     * EL siguiente metodo permite obtener el dato correspondiente al autor del documento.
+     * Retorna un String correspondiente al autor del documento.
+     */
     public String getAutor(){
         return autor;
     }
 
+    /**
+     * EL siguiente metodo permite obtener el dato correspondiente al arreglo de objetos tipo Version.
+     * Retorna un ArrayList correspondiente al arreglo de objetos tipo Version de un documento.
+     */
     public ArrayList<Version> getListaVersiones(){
         return listaVersiones;
     }
 
+    /**
+     * EL siguiente metodo permite obtener el dato correspondiente al arreglo de objetos tipo Acceso.
+     * Retorna un ArrayList correspondiente al arreglo de objetos tipo Acceso de un documento.
+     */
     public ArrayList<Acceso> getListaAccesos(){
         return listaAccesos;
     }
 
+    /**
+     * EL siguiente metodo permite representar un Documento como un String.
+     * Retorna un String correspondiente al Documento.
+     */
     @Override
     public String toString() {
         return "Documento{" +
@@ -53,6 +80,4 @@ public class Documento {
                 ", listaAccesos=" + listaAccesos +
                 '}';
     }
-
-    // Metodos
 }

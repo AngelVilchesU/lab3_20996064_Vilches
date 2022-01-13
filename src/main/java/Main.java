@@ -9,7 +9,6 @@ public class Main {
     public static void main(String[] args){
 
         // Creacion del editor y/o plataforma con informacion inicialmente integrada
-
         Date fechaCreacion = new Date();
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         ArrayList<Documento> listaDocumentos = new ArrayList<>();
@@ -62,15 +61,13 @@ public class Main {
 
         // Menu interactivo
 
-
-
-
-
         Scanner entrada = new Scanner(System.in);
         boolean cerrarPrograma = false;
         int eleccion;
 
+        // Mientras no se ordene/seleccione la opcion que responde al cierre del programa...
         while(!cerrarPrograma){
+
             // Se refleja por pantella la existencia (o no) de un usuario autenticado
             if(paradigmaDocs.existeUsuarioActivo()){
                 System.out.println("Usuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
@@ -78,6 +75,7 @@ public class Main {
             else {
                 System.out.println("Usuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
             }
+            // Se imprime por pantalla las opciones a disposicion
             System.out.println("Escoja una de las siguientes opciones");
             System.out.println("Para registrar un nuevo usuario ingrese: 1");
             System.out.println("Para autenticar un usuario ingrese: 2");
@@ -91,6 +89,7 @@ public class Main {
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
 
+            // Se evalua la eleccion introducida
             switch(eleccion){
                 case 1:
                     System.out.println("Se ha seleccionado la opcion 1");

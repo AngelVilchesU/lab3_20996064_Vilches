@@ -1,8 +1,14 @@
 package TDA;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Date;
+
+/**
+ * Clase para representar la plataforma/editor.
+ * Cada ParadigmaDocs se encuentra determinada por el nombre de plataforma, fecha de creacion
+ * un arreglo de objetos tipo Usuario y arreglo de objetos tipo Documento.
+ * @author Angel Vilches
+ */
 
 public class ParadigmaDocs {
     // Atributos
@@ -13,7 +19,7 @@ public class ParadigmaDocs {
 
     // Constructor
     public ParadigmaDocs ParadigmaDocs(String nombrePlataforma, Date fechaCreacion,
-                                            ArrayList listaUsuarios, ArrayList listaDocumentos){
+                                            ArrayList<Usuario> listaUsuarios, ArrayList<Documento> listaDocumentos){
         this.nombrePlataforma = nombrePlataforma;
         this.fechaCreacion = fechaCreacion;
         this.listaUsuarios = listaUsuarios;
@@ -23,9 +29,13 @@ public class ParadigmaDocs {
 
     // Metodos
 
-    // Metodo que permite determinar la existencia de un usuario
+    /**
+     * EL siguiente metodo permite determinar la existencia de un usuario en el arreglo de objetos tipo Usuario.
+     * Retorna un boolean correspondiente a la existencia de dicho usuario.
+     */
     private boolean existeUsuario(Usuario usuario){
         int i = 0;
+        // Se recorre el arreglo buscando en paralelo la existencia del usuario ingresado
         for(i = 0; i < this.listaUsuarios.size(); i ++){
             if(this.listaUsuarios.get(i).getNombreUsuario().equals(usuario.getNombreUsuario())){
                 return true;
@@ -34,10 +44,14 @@ public class ParadigmaDocs {
         return false;
     }
 
-
-    // Metodo que permite determinar si un usuario figura como autor de un documento de acuerdo a su identificador
+    /**
+     * EL siguiente metodo permite determinar si un usuario figura como autor de un documento de acuerdo a su identificador.
+     * Retorna un boolean correspondiente a la existencia de un usuario como autor de un documento determinado.
+     */
     public boolean existeDocumentoAutor(int iDdocumento, String autor){
         int i = 0;
+        // Se recorre el arreglo buscando en paralelo el documento (con su identificador) junto con
+        // la existencia del usuario ingresado como su respectivo autor.
         for(i = 0; i < this.listaDocumentos.size(); i ++){
             if(this.listaDocumentos.get(i).getiDdocumento() == iDdocumento && this.listaDocumentos.get(i).getAutor().equals(autor)){
                 return true;
@@ -46,16 +60,17 @@ public class ParadigmaDocs {
         return false;
     }
 
-    // Metodo que permite determinar si un usuario figura como autor de un documento de acuerdo a su identificador
-    public boolean existeDocumentoEditor(ArrayList<Acceso> listaAccesos, String editor){
+    /**
+     * EL siguiente metodo permite determinar si un usuario se le ha compartido un documento, de acuerdo a su arreglo
+     * contenedor de accesos, con acceso/permiso de edicion.
+     * Retorna un boolean correspondiente a la existencia de un usuario como editor de un documento determinado.
+     */
+     public boolean existeDocumentoEditor(ArrayList<Acceso> listaAccesos, String editor){
         int i = 0;
         char permisoEditor = 'W';
-
+        // Se recorre el arreglo de accesos buscando en paralelo el nombre del editor con su respectivo7
+        // permiso de edición
         for(i = 0; i < listaAccesos.size(); i ++){
-            System.out.println("//////////////////////////////////////////");
-            System.out.println("ACCESOS DATOS:" + editor + permisoEditor );
-            System.out.println("LISTA ACCESOS: " + listaAccesos);
-            System.out.println("RESULTADO COMPARACION: " + listaAccesos.get(i).getNombreUsuario().equals(editor) + listaAccesos.get(i).getTipoAcceso() + permisoEditor);
             if(listaAccesos.get(i).getNombreUsuario().equals(editor) && listaAccesos.get(i).getTipoAcceso() == permisoEditor){
                 return true;
             }
@@ -63,10 +78,15 @@ public class ParadigmaDocs {
         return false;
     }
 
-
-    // Metodo que permite determinar la existencia de un nombre de usuario
+    /**
+     * EL siguiente metodo permite determinar la existencia de un nombre de usuario en el arreglo de objetos tipo
+     * Usuario.
+     * Retorna un boolean correspondiente a la existencia de un usuario registrado en la plataforma.
+     */
     public boolean existeNombreUsuario(String nombreUsuario){
         int i = 0;
+        // Se recorre el arreglo de usuarios registrados buscando en paralelo el nombre de aquel usuario
+        // que se busca determinar su existencia
         for(i = 0; i < this.listaUsuarios.size(); i ++){
             if(this.listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuario)){
                 return true;
@@ -75,17 +95,25 @@ public class ParadigmaDocs {
         return false;
     }
 
-    // Metodo que permite determinar si un usuario determinado se encuentra activo
-    private boolean esUsuarioActivo(Usuario usuario){
+    /**
+     * EL siguiente metodo permite determinar si un usuario especifico esta activo.
+     * Retorna un boolean correspondiente a la verificacion de si el usuario esta activo o no.
+     */
+    public boolean esUsuarioActivo(Usuario usuario){
         if(usuario.getSesion() == 1){
             return true;
         }
         return false;
     }
 
-    // Metodo que permite determinar si existe un usuario activo
+    /**
+     * EL siguiente metodo permite determinar la existencia de un usuario activo en la plataforma.
+     * Retorna un boolean correspondiente a la existencia de un usuario activo.
+     */
     public boolean existeUsuarioActivo(){
         int i = 0;
+        // Se recorre el arreglo de usuarios registrados buscando en paralelo la existencia de un usuario
+        // activo
         for(i = 0; i < this.listaUsuarios.size(); i ++){
             if(this.listaUsuarios.get(i).getSesion() == 1){
                 return true;
@@ -94,9 +122,14 @@ public class ParadigmaDocs {
         return false;
     }
 
-    // Metodo que permite retornar el nombre de un usuario activo
+    /**
+     * EL siguiente metodo permite obtener el nombre de un usuario activo en la plataforma.
+     * Retorna un String correspondiente al nombre de usuario activo.
+     */
     public String nombreUsuarioActivo(){
         int i = 0;
+        // Se recorre el arreglo de usuarios registrados buscando en paralelo la existencia de unm usuario
+        // activo retornando su nombre de usuario
         for(i = 0; i < this.listaUsuarios.size(); i ++){
             if(this.listaUsuarios.get(i).getSesion() == 1){
                 return this.listaUsuarios.get(i).getNombreUsuario();
@@ -105,7 +138,11 @@ public class ParadigmaDocs {
         return "No existe usuario activo";
     }
 
-    // Metodo que permite ordenar los identificadores de la lista u arreglo de versiones
+    /**
+     * EL siguiente metodo permite modificar el arreglo de versiones de un documento tras una restauracion
+     * de modo que al finalizar el proceso el arreglo sea correlativo (identificador).
+     * Proceso que "ordena" los identificadores del arreglo de versiones.
+     */
     private void correlativo(ArrayList<Version> listaVersiones){
         int i;
         for (i = 0; i < listaVersiones.size(); i ++){
@@ -149,6 +186,8 @@ public class ParadigmaDocs {
             return false;
         }
     }
+
+
 
     // Metodo que permite cerrar una sesion activa de usuario
     public boolean logout(){
@@ -286,8 +325,12 @@ public class ParadigmaDocs {
         }
     }
 
+    /**
+     * EL siguiente metodo permite representar una plataforma como un String.
+     * Retorna un String correspondiente a ParadigmaDocs.
+     */
     @Override
-    public String toString() {
+    public String toString(){
         return "ParadigmaDocs{" +
                 "nombrePlataforma='" + nombrePlataforma + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
