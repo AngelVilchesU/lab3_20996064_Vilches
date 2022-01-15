@@ -85,7 +85,9 @@ public class Main {
             System.out.println("Para aniadir texto a un documentos ingrese: 6");
             System.out.println("Para ejecutar el metodo rollback a la version de un documento ingrese: 7");
             System.out.println("Para revocar los accesos a un documento ingrese: 8");
-            System.out.println("Para cerrar el programa selecciones el entero 9");
+            System.out.println("Para buscar un texto especifico en un documento ingrese: 9");
+
+            System.out.println("Para cerrar el programa selecciones el entero 10");
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
 
@@ -257,44 +259,38 @@ public class Main {
                     else {
                         System.out.println("No se ha restaurado la version del documento (usuario inexistente o no autenticado)");
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     break;
                 case 9:
                     System.out.println("Se ha seleccionado la opcion 9");
+
+                    Scanner parametrosCase9 = new Scanner(System.in);
+
+                    if(paradigmaDocs.existeUsuarioActivo()) {
+
+
+                        System.out.println("Ingrese el texto a buscar: ");
+                        String textoBuscarCase9 = parametrosCase9.nextLine();
+
+                        paradigmaDocs.search(textoBuscarCase9);
+
+                    }
+                    else {
+                        System.out.println("No se ha realizado el proceso de busqueda (usuario inexistente o no autenticado)");
+                    }
+
+                    break;
+
+
+
+                case 10:
+                    System.out.println("Se ha seleccionado la opcion 9");
+
+
+
                     cerrarPrograma = true;
                     break;
+
+
                 default:
                     System.out.println("Favor de seleccionar una opcion valida");
             }

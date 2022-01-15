@@ -68,10 +68,31 @@ public class ParadigmaDocs {
      public boolean existeDocumentoEditor(ArrayList<Acceso> listaAccesos, String editor){
         int i = 0;
         char permisoEditor = 'W';
-        // Se recorre el arreglo de accesos buscando en paralelo el nombre del editor con su respectivo7
+        // Se recorre el arreglo de accesos buscando en paralelo el nombre del editor con su respectivo
         // permiso de edición
         for(i = 0; i < listaAccesos.size(); i ++){
             if(listaAccesos.get(i).getNombreUsuario().equals(editor) && listaAccesos.get(i).getTipoAcceso() == permisoEditor){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * EL siguiente metodo permite determinar si un usuario se le ha compartido un documento, de acuerdo a su arreglo
+     * contenedor de accesos, con acceso/permiso de edicion.
+     * Retorna un boolean correspondiente a la existencia de un usuario como editor de un documento determinado.
+     */
+    public boolean existeDocumentoCompartido(ArrayList<Acceso> listaAccesos, String usuario){
+        int i = 0;
+        char permisoLector = 'R';
+        char permisoEditor = 'W';
+        char permisoComentar = 'C';
+        // Se recorre el arreglo de accesos buscando en paralelo el nombre del usuario con su respectivo
+        // permiso de acceso
+        for(i = 0; i < listaAccesos.size(); i ++){
+            if(listaAccesos.get(i).getNombreUsuario().equals(usuario) && listaAccesos.get(i).getTipoAcceso() == permisoEditor
+            || listaAccesos.get(i).getTipoAcceso() == permisoEditor || listaAccesos.get(i).getTipoAcceso() == permisoComentar){
                 return true;
             }
         }
@@ -324,6 +345,49 @@ public class ParadigmaDocs {
             }
         }
     }
+
+    // Metodo que permite a un usuario autenticado (por ende registrado) realizar una busqueda
+    // de un texto especifico tanto en sus documentos (autor) como en aquellos que le hayan sido
+    // compartidos (lectura, escritura o comentario)
+    public void search(String textoBuscar){
+        // Se buscan los documentos de acuerdo a su autor y/o acceso
+        int i = 0;
+        int j = 0;
+
+        for(i = 0; i < this.listaDocumentos.size(); i ++){
+            // Si el usuario que ejecuto la funcionalidad figura como autor o se le ha compartido...
+            if(existeDocumentoAutor(this.listaDocumentos.get(i).getiDdocumento(), nombreUsuarioActivo()) || existeDocumentoCompartido(this.listaDocumentos.get(i).getListaAccesos(), nombreUsuarioActivo())) {
+                // Se busca en las versiones el texto introducido
+                for(j = 0; j < this.listaDocumentos.get(i).getListaVersiones().size(); j ++){
+                    // Si existe en el documento (versiones) el texto a buscar...
+                    if(this.listaDocumentos.get(i).getListaVersiones().get(j).getTextoContenido().contains(textoBuscar)){
+                        System.out.println("El texto introducido se encuentra en el documento de ID " +
+                                this.listaDocumentos.get(i).getiDdocumento() + "y nombre " +
+                                this.listaDocumentos.get(i).getNombreDocumento());
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * EL siguiente metodo permite representar una plataforma como un String.

@@ -50,6 +50,14 @@ public class Documento {
     }
 
     /**
+     * EL siguiente metodo permite obtener el dato correspondiente al nombre del documento.
+     * Retorna un String correspondiente al nombre del documento.
+     */
+    public String getNombreDocumento(){
+        return nombreDocumento;
+    }
+
+    /**
      * EL siguiente metodo permite obtener el dato correspondiente al arreglo de objetos tipo Version.
      * Retorna un ArrayList correspondiente al arreglo de objetos tipo Version de un documento.
      */
