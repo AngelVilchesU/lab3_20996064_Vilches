@@ -1,9 +1,11 @@
 package TDA;
 
+import java.util.Date;
+
 /**
  * Clase para representar el usuario que posee una plataforma.
- * Cada Usuario se encuentra determinada por el nombre de usuario, contrasenia de usuario y
- * un indicador que refleja si un usuario se encuentra activo o no.
+ * Cada Usuario se encuentra determinada por el nombre de usuario, contrasenia de usuario,
+ * fecha de creacion y un indicador que refleja si un usuario se encuentra activo o no.
  * @author Angel Vilches
  */
 
@@ -11,12 +13,14 @@ public class Usuario {
     // Atributos
     private String nombreUsuario;
     private String contraseniaUsuario;
-    private int sesion;
+    private Date fechaCreacion;
+    private boolean sesion;
 
     // Constructor
-    public Usuario Usuario(String nombreUsuario, String contraseniaUsuario, int sesion){
+    public Usuario Usuario(String nombreUsuario, String contraseniaUsuario, Date fechaCreacion, boolean sesion){
         this.nombreUsuario = nombreUsuario;
         this.contraseniaUsuario = contraseniaUsuario;
+        this.fechaCreacion = fechaCreacion;
         this.sesion = sesion;
         return this;
     }
@@ -40,20 +44,21 @@ public class Usuario {
     }
 
     /**
-     * EL siguiente metodo permite obtener el dato correspondiente a la sesion de usuario.
-     * Retorna un int correspondiente a la sesion de usuario.
+     * EL siguiente metodo permite obtener el dato correspondiente a la fecha de creacion de usuario.
+     * Retorna Date correspondiente a la fecha de creacion de usuario.
      */
-    public int getSesion(){
-        return sesion;
+    public Date getFechaCreacion(){
+        return fechaCreacion;
     }
 
     /**
-     * EL siguiente metodo permite modificar el dato correspondiente a la sesion de un usuario.
-     * La sesion de un usuario es modificada al momento de autenticarse o cerrar sesion en la plataforma.
+     * EL siguiente metodo permite obtener el dato correspondiente a la sesion de usuario.
+     * Retorna un int correspondiente a la sesion de usuario.
      */
-    public void setSesion(int sesion){
-        this.sesion = sesion;
+    public boolean getSesion(){
+        return sesion;
     }
+
 
     /**
      * EL siguiente metodo permite representar un Usuario como un String.
@@ -61,10 +66,7 @@ public class Usuario {
      */
     @Override
     public String toString() {
-        return "Usuario{" +
-                "nombreUsuario='" + nombreUsuario + '\'' +
-                ", contraseniaUsuario='" + contraseniaUsuario + '\'' +
-                ", sesion=" + sesion +
-                '}';
+        return "Nombre usuario: " + nombreUsuario + "\n" +
+                "Fecha de Creacion: " + fechaCreacion + "\n";
     }
 }

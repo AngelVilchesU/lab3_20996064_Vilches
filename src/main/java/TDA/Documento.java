@@ -21,7 +21,7 @@ public class Documento {
 
     // Constructor
     public Documento Documento(int iDdocumento, String autor, String nombreDocumento, Date fechaCreacion,
-                                    ArrayList listaVersiones, ArrayList listaAccesos){
+                                    ArrayList<Version> listaVersiones, ArrayList<Acceso> listaAccesos){
         this.iDdocumento = iDdocumento;
         this.autor = autor;
         this.nombreDocumento = nombreDocumento;
@@ -79,13 +79,12 @@ public class Documento {
      */
     @Override
     public String toString() {
-        return "Documento{" +
-                "iDdocumento=" + iDdocumento +
-                ", autor=" + autor +
-                ", nombreDocumento='" + nombreDocumento + '\'' +
-                ", fechaCreacion=" + fechaCreacion +
-                ", listaVersiones=" + listaVersiones +
-                ", listaAccesos=" + listaAccesos +
-                '}';
+        return "ID documento: " + iDdocumento + "\n" +
+                "Nombre documento: " + nombreDocumento + "\n" +
+                "Autor: " + autor + "\n" +
+                "Fecha Creacion: " + fechaCreacion + "\n" +
+                "Numero de versiones: " + listaVersiones.size() + "\n" +
+                "Contenido (actual): " + listaVersiones.get(listaVersiones.size() - 1).getTextoContenido() + "\n" +
+                "Permisos otorgados: " + listaAccesos + "\n" + "\n";
     }
 }

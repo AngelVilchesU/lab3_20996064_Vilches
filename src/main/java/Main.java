@@ -16,44 +16,34 @@ public class Main {
         ParadigmaDocs paradigmaDocs = new ParadigmaDocs().ParadigmaDocs("ParadigmaDocs", fechaCreacion, listaUsuarios, listaDocumentos);
 
         // Registro de cinco usuarios (inicialmente)
-        Usuario user1 = new Usuario();
-        Usuario user2 = new Usuario();
-        Usuario user3 = new Usuario();
-        Usuario user4 = new Usuario();
-        Usuario user5 = new Usuario();
-        user1.Usuario("Jaime L.", "pinturaseca", 0);
-        user2.Usuario("Cale V", "legustashingeki", 0);
-        user3.Usuario("Aranza H", "SUS", 0);
-        user4.Usuario("Benjamin N", "naarro", 0);
-        user5.Usuario("Gonzalo M", "golazomarimbio", 0);
-        paradigmaDocs.register(user1.getNombreUsuario(), user1.getContraseniaUsuario(), user1.getSesion());
-        paradigmaDocs.register(user2.getNombreUsuario(), user2.getContraseniaUsuario(), user2.getSesion());
-        paradigmaDocs.register(user3.getNombreUsuario(), user3.getContraseniaUsuario(), user3.getSesion());
-        paradigmaDocs.register(user4.getNombreUsuario(), user4.getContraseniaUsuario(), user4.getSesion());
-        paradigmaDocs.register(user5.getNombreUsuario(), user5.getContraseniaUsuario(), user5.getSesion());
+        paradigmaDocs.register("Jaime L.", "pinturaseca");
+        paradigmaDocs.register("Cale V.", "legustashingeki");
+        paradigmaDocs.register("Aranza H.", "SUS");
+        paradigmaDocs.register("Benjamin N.", "naarro");
+        paradigmaDocs.register("Gonzalo M.", "golazomarimbio");
 
         // Creacion de diez documentos (inicialmente)
-        paradigmaDocs.login(user1.getNombreUsuario(), user1.getContraseniaUsuario(), user1.getSesion());
+        paradigmaDocs.login("Jaime L.", "pinturaseca");
         paradigmaDocs.create("Documento 0", "Primer contenido del documento de ID 0");
         paradigmaDocs.create("Documento 1", "Primer contenido del documento de ID 1");
         paradigmaDocs.logout();
 
-        paradigmaDocs.login(user2.getNombreUsuario(), user2.getContraseniaUsuario(), user2.getSesion());
+        paradigmaDocs.login("Cale V.", "legustashingeki");
         paradigmaDocs.create("Documento 2", "Primer contenido del documento de ID 2");
         paradigmaDocs.create("Documento 3", "Primer contenido del documento de ID 3");
         paradigmaDocs.logout();
 
-        paradigmaDocs.login(user3.getNombreUsuario(), user3.getContraseniaUsuario(), user3.getSesion());
+        paradigmaDocs.login("Aranza H.", "SUS");
         paradigmaDocs.create("Documento 4", "Primer contenido del documento de ID 4");
         paradigmaDocs.create("Documento 5", "Primer contenido del documento de ID 5");
         paradigmaDocs.logout();
 
-        paradigmaDocs.login(user4.getNombreUsuario(), user4.getContraseniaUsuario(), user4.getSesion());
+        paradigmaDocs.login("Benjamin N.", "naarro");
         paradigmaDocs.create("Documento 6", "Primer contenido del documento de ID 6");
         paradigmaDocs.create("Documento 7", "Primer contenido del documento de ID 7");
         paradigmaDocs.logout();
 
-        paradigmaDocs.login(user5.getNombreUsuario(), user5.getContraseniaUsuario(), user5.getSesion());
+        paradigmaDocs.login("Gonzalo M.", "golazomarimbio");
         paradigmaDocs.create("Documento 8", "Primer contenido del documento de ID 8");
         paradigmaDocs.create("Documento 9", "Primer contenido del documento de ID 9");
         paradigmaDocs.logout();
@@ -70,10 +60,10 @@ public class Main {
 
             // Se refleja por pantella la existencia (o no) de un usuario autenticado
             if(paradigmaDocs.existeUsuarioActivo()){
-                System.out.println("Usuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
+                System.out.println("\nUsuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
             }
             else {
-                System.out.println("Usuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
+                System.out.println("\nUsuario Activo: " + paradigmaDocs.nombreUsuarioActivo() + "\n");
             }
             // Se imprime por pantalla las opciones a disposicion
             System.out.println("Escoja una de las siguientes opciones");
@@ -86,8 +76,9 @@ public class Main {
             System.out.println("Para ejecutar el metodo rollback a la version de un documento ingrese: 7");
             System.out.println("Para revocar los accesos a un documento ingrese: 8");
             System.out.println("Para buscar un texto especifico en un documento ingrese: 9");
+            System.out.println("Para ejecutar el metodo visualize ingrese: 10");
 
-            System.out.println("Para cerrar el programa selecciones el entero 10");
+            System.out.println("Para cerrar el programa selecciones el entero 11");
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
 
@@ -95,12 +86,13 @@ public class Main {
             switch(eleccion){
                 case 1:
                     System.out.println("Se ha seleccionado la opcion 1");
+
                     Scanner parametrosCase1 = new Scanner(System.in);
                     System.out.println("Introduzca el nombre de usuario: ");
                     String nombreUsuarioCase1 = parametrosCase1.nextLine();
                     System.out.println("Introduzca la contrasenia de usuario: ");
                     String contraseniaUsuarioCase1 = parametrosCase1.nextLine();
-                    if(paradigmaDocs.register(nombreUsuarioCase1, contraseniaUsuarioCase1, 0)){
+                    if(paradigmaDocs.register(nombreUsuarioCase1, contraseniaUsuarioCase1)){
                         System.out.println("El usuario ha sido registrado existosamente");
                     }
                     else {
@@ -109,12 +101,13 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Se ha seleccionado la opcion 2");
+
                     Scanner parametrosCase2 = new Scanner(System.in);
                     System.out.println("Introduzca el nombre de usuario: ");
                     String nombreUsuarioCase2 = parametrosCase2.nextLine();
                     System.out.println("Introduzca la contrasenia de usuario: ");
                     String contraseniaUsuarioCase2 = parametrosCase2.nextLine();
-                    if(paradigmaDocs.login(nombreUsuarioCase2, contraseniaUsuarioCase2, 0)){
+                    if(paradigmaDocs.login(nombreUsuarioCase2, contraseniaUsuarioCase2)){
                         System.out.println("El usuario ha sido autenticado existosamente");
                     }
                     else {
@@ -123,6 +116,7 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Se ha seleccionado la opcion 3");
+
                     if(paradigmaDocs.logout()){
                         System.out.println("El usuario ha finalizado su sesion activa existosamente");
                     }
@@ -132,173 +126,127 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Se ha seleccionado la opcion 4");
-                    // Inicialmente se verifica la existencia de un usuario registrado activo
-                    if(paradigmaDocs.existeUsuarioActivo()){
-                        Scanner parametrosCase4 = new Scanner(System.in);
-                        System.out.println("Introduzca el nombre del documento (String): ");
-                        String nombreDocumentoCase4 = parametrosCase4.nextLine();
-                        System.out.println("Introduzca el contenido del documento (String): ");
-                        String textoContenidoCase4 = parametrosCase4.nextLine();
 
-                        paradigmaDocs.create(nombreDocumentoCase4, textoContenidoCase4);
-                        System.out.println("Se ha creado/registrado un nuevo documento existosamente");
-                        System.out.println("\n");
-                    }
-                    else {
-                        System.out.println("No se ha creado/registrado un nuevo documento (usuario inexistente o no autenticado)");
-                    }
+                    Scanner parametrosCase4 = new Scanner(System.in);
+                    System.out.println("Introduzca el nombre del documento (String): ");
+                    String nombreDocumentoCase4 = parametrosCase4.nextLine();
+                    System.out.println("Introduzca el contenido del documento (String): ");
+                    String textoContenidoCase4 = parametrosCase4.nextLine();
+
+                    paradigmaDocs.create(nombreDocumentoCase4, textoContenidoCase4);
                     break;
                 case 5:
                     System.out.println("Se ha seleccionado la opcion 5");
 
-                    // Inicialmente se verifica la existencia de un usuario registrado activo
-                    if(paradigmaDocs.existeUsuarioActivo()) {
+                    // Se inicia un proceso en donde se consulta por los usuarios a compartir filtrando
+                    // aquellos usuarios que figuren como registrados para luego, una vez que el usuario
+                    // indique que no desea compartir el documento con mas personas, solicitar el ID
+                    // del documento a compartir y el tipo de acceso al mismo, sea permisos lectura ("R"),
+                    // escritura ("W") o comentario ("C").
+                    // Es importante comentar que, para no iterrumpir el proceso, los usuarios a compartir
+                    // que no figuren registrados no seran considerados al momento de ejecutar el
+                    // requerimiento funcional share
+                    boolean nuevoCompartido = false;
+                    int agregarCompartido;
+                    ArrayList<String> listaUsuariosCompartir = new ArrayList<>();
+                    Scanner parametrosCase5 = new Scanner(System.in);
 
-                        boolean nuevoCompartido = false;
-                        int agregarCompartido;
-                        ArrayList<String> listaUsuariosCompartir = new ArrayList<>();
-                        Scanner parametrosCase5 = new Scanner(System.in);
+                    while (!nuevoCompartido) {
 
-                        while (!nuevoCompartido) {
+                        Scanner parametrosCase5w = new Scanner(System.in);
+                        System.out.println("Ingrese el nombre de usuario a compartir su documento: ");
+                        String nombreUsuarioCase5 = parametrosCase5w.nextLine();
+                        System.out.println("\n");
+                        System.out.println("Si desea agregar otro usuario introduzca: 1");
+                        System.out.println("Si no desea agregar otro usuario introduzca: 0");
+                        agregarCompartido = entrada.nextInt();
 
-                            Scanner parametrosCase5w = new Scanner(System.in);
-                            System.out.println("Ingrese el nombre de usuario a compartir su documento: ");
-                            String nombreUsuarioCase5 = parametrosCase5w.nextLine();
-                            System.out.println("\n");
-                            System.out.println("Si desea agregar otro usuario introduzca: 1");
-                            System.out.println("Si no desea agregar otro usuario introduzca: 0");
-                            agregarCompartido = entrada.nextInt();
-
-                            // Se verifica que el/los usuario/s a compartir exista/n
-                            if (paradigmaDocs.existeNombreUsuario(nombreUsuarioCase5)) {
-                                System.out.println("Es posible compartir el documento al/los usuario/s designado/s");
-                                listaUsuariosCompartir.add(nombreUsuarioCase5);
-                            } else {
-                                System.out.println("No posible compartir el documento al/los usuario/s designado/s");
-                            }
-
-                            switch (agregarCompartido) {
-                                case 0:
-                                    System.out.println("Ha seleccionado: 0");
-                                    nuevoCompartido = true;
-                                    break;
-                                case 1:
-                                    System.out.println("Ha seleccionado: 1");
-                                    break;
-                                default:
-                                    System.out.println("Favor de seleccionar una opcion valida");
-                            }
+                        // Se verifica que el/los usuario/s a compartir exista/n
+                        if (paradigmaDocs.existeNombreUsuario(nombreUsuarioCase5)) {
+                            System.out.println("Es posible compartir el documento al/los usuario/s designado/s");
+                            listaUsuariosCompartir.add(nombreUsuarioCase5);
+                        } else {
+                            System.out.println("No posible compartir el documento al/los usuario/s designado/s");
                         }
 
-                        System.out.println("Ingrese el identificador numerico del documento a compartir: ");
-                        int iDdocumentoCase5 = parametrosCase5.nextInt();
-
-                        // Se verifica que el usuario autenticado figure como autor del documento
-                        if(paradigmaDocs.existeDocumentoAutor(iDdocumentoCase5, paradigmaDocs.nombreUsuarioActivo())){
-                            System.out.println("Si es posible compartir el documento");
-                            System.out.println("Ingrese el tipo de acceso (R, W o C): ");
-                            char tipoAccesoCase5 = parametrosCase5.next().charAt(0);
-
-                            paradigmaDocs.share(listaUsuariosCompartir, iDdocumentoCase5, tipoAccesoCase5);
-                        }
-                        else {
-                            System.out.println("No es posible compartir el documento (no existe o usted no su autor)");
+                        switch (agregarCompartido) {
+                            case 0:
+                                System.out.println("Ha seleccionado: 0");
+                                nuevoCompartido = true;
+                                break;
+                            case 1:
+                                System.out.println("Ha seleccionado: 1");
+                                break;
+                            default:
+                                System.out.println("Favor de seleccionar una opcion valida");
                         }
                     }
-                    else {
-                        System.out.println("No se ha compartido el documento (usuario inexistente o no autenticado)");
-                    }
+
+                    System.out.println("Ingrese el identificador numerico del documento a compartir: ");
+                    int iDdocumentoCase5 = parametrosCase5.nextInt();
+
+
+                    System.out.println("Ingrese el tipo de acceso (R, W o C): ");
+                    char tipoAccesoCase5 = parametrosCase5.next().charAt(0);
+
+                    paradigmaDocs.share(listaUsuariosCompartir, iDdocumentoCase5, tipoAccesoCase5);
                     break;
                 case 6:
                     System.out.println("Se ha seleccionado la opcion 6");
 
-                    if(paradigmaDocs.existeUsuarioActivo()) {
+                    Scanner parametrosCase6 = new Scanner(System.in);
+                    System.out.println("Ingrese el identificador del documento a editar: ");
+                    int iDdocumentoCase6 = entrada.nextInt();
+                    System.out.println("Ingrese el contenido a adicionar (String): ");
+                    String textoContenidoCase6 = parametrosCase6.nextLine();
 
-                        Scanner parametrosCase6 = new Scanner(System.in);
-                        System.out.println("Ingrese el identificador del documento a editar: ");
-                        int iDdocumentoCase6 = entrada.nextInt();
-                        System.out.println("Ingrese el contenido a adicionar (String): ");
-                        String textoContenidoCase6 = parametrosCase6.nextLine();
-
-                        paradigmaDocs.add(iDdocumentoCase6, textoContenidoCase6);
-
-                    }
-                    else {
-                        System.out.println("No se ha aniadido texto al documento (usuario inexistente o no autenticado)");
-                    }
+                    paradigmaDocs.add(iDdocumentoCase6, textoContenidoCase6);
                     break;
                 case 7:
                     System.out.println("Se ha seleccionado la opcion 7");
 
-                    if(paradigmaDocs.existeUsuarioActivo()) {
-
                         Scanner parametrosCase7 = new Scanner(System.in);
                         System.out.println("Ingrese el identificador del documento sobre el cual operar: ");
                         int iDdocumentoCase7 = entrada.nextInt();
-                        System.out.println("Ingrese el identificar de la version a restaurar: ");
+                        System.out.println("Ingrese el identificador de la version a restaurar: ");
                         int iDversionCase7 = parametrosCase7.nextInt();
 
                         paradigmaDocs.rollback(iDdocumentoCase7, iDversionCase7);
-
-                    }
-                    else {
-                        System.out.println("No se ha restaurado la version del documento (usuario inexistente o no autenticado)");
-                    }
                     break;
                 case 8:
                     System.out.println("Se ha seleccionado la opcion 8");
-
-                    if(paradigmaDocs.existeUsuarioActivo()) {
 
                         System.out.println("Ingrese el identificador del documento sobre el cual operar: ");
                         int iDdocumentoCase8 = entrada.nextInt();
 
                         paradigmaDocs.revokeAccess(iDdocumentoCase8);
 
-                    }
-                    else {
-                        System.out.println("No se ha restaurado la version del documento (usuario inexistente o no autenticado)");
-                    }
                     break;
                 case 9:
                     System.out.println("Se ha seleccionado la opcion 9");
 
                     Scanner parametrosCase9 = new Scanner(System.in);
+                    System.out.println("Ingrese el texto a buscar: ");
+                    String textoBuscarCase9 = parametrosCase9.nextLine();
 
-                    if(paradigmaDocs.existeUsuarioActivo()) {
-
-
-                        System.out.println("Ingrese el texto a buscar: ");
-                        String textoBuscarCase9 = parametrosCase9.nextLine();
-
-                        paradigmaDocs.search(textoBuscarCase9);
-
-                    }
-                    else {
-                        System.out.println("No se ha realizado el proceso de busqueda (usuario inexistente o no autenticado)");
-                    }
+                    paradigmaDocs.search(textoBuscarCase9);
 
                     break;
-
-
-
                 case 10:
-                    System.out.println("Se ha seleccionado la opcion 9");
+                    System.out.println("Se ha seleccionado la opcion 10");
 
+                    paradigmaDocs.visualize();
 
+                    break;
+                case 11:
+                    System.out.println("Se ha seleccionado la opcion 11");
 
                     cerrarPrograma = true;
                     break;
-
-
                 default:
                     System.out.println("Favor de seleccionar una opcion valida");
             }
         }
         System.out.println("Ha concluido la ejecucion del programa");
-
-
-        System.out.println("--------------");
-        System.out.println(paradigmaDocs);
     }
 }
