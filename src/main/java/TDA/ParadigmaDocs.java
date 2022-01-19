@@ -172,9 +172,10 @@ public class ParadigmaDocs {
     }
 
     /**
-     * EL siguiente requerimiento funcional permite el registro de un nuevo usuario a la plataforma u editor
-     * de modo que se evalua la existencia del nombre de usuario a registrar (a modo de ID unico) con los
-     * ya registrados para, en caso de no encontrarse añadirle y, en caso de encontrarse no añardirle.
+     * EL siguiente metodo (como parte del requerimiento funcional authentication) permite el registro de un nuevo
+     * usuario a la plataforma u editor de modo que se evalua la existencia del nombre de usuario a registrar
+     * (a modo de ID unico) con los ya registrados para, en caso de no encontrarse añadirle y, en caso de encontrarse
+     * no añardirle.
      * Retorna un boolean de acuerdo a si la operacion fue realizada correctamente o no.
      */
     public boolean register(String nombreUsuario, String contraseniaUsuario){
@@ -197,10 +198,10 @@ public class ParadigmaDocs {
     }
 
     /**
-     * EL siguiente requerimiento funcional permite validar las credenciales de acceso de usuario registrado
-     * en la plataforma u editor de modo que se evalua la existencia del nombre de usuario a registrar
-     * (a modo de ID unico) en paralelo con su respectiva contrasenia para, en caso de ser correctas
-     * autenticarle y, en caso de ser erronea no autenticarle.
+     * EL siguiente metodo (como parte del requerimiento funcional authentication) permite validar las credenciales
+     * de acceso de usuario registrado en la plataforma u editor de modo que se evalua la existencia del nombre
+     * de usuario a registrar (a modo de ID unico) en paralelo con su respectiva contrasenia para, en caso de ser
+     * correctas autenticarle y, en caso de ser erronea no autenticarle.
      * Retorna un boolean de acuerdo a si la operacion fue realizada correctamente o no.
      */
     public boolean login(String nombreUsuario, String contraseniaUsuario){
@@ -212,24 +213,28 @@ public class ParadigmaDocs {
             // Se recorre la zona de usuarios registrados evaluando en paralelo el nombre de usuario
             // y contrasenia ingresada
             for(i = 0; i < listaUsuarios.size(); i ++){
-                if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuario)){
+                if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuario) && listaUsuarios.get(i).getContraseniaUsuario().equals(contraseniaUsuario)){
                     Usuario usuarioAutenticado = new Usuario();
                     boolean sesionActiva = true;
                     usuarioAutenticado.Usuario(nombreUsuario, contraseniaUsuario, listaUsuarios.get(i).getFechaCreacion(), sesionActiva);
                     listaUsuarios.set(i, usuarioAutenticado);
+                    System.out.println("El usuario ha sido autenticado existosamente");
+                    return true;
                 }
             }
-            return true;
+            System.out.println("El usuario no ha sido autenticado (contrasenia incorrecta)");
+            return false;
         }
         else {
+            System.out.println("El usuario no ha sido autenticado (no existe)");
             return false;
         }
     }
 
     /**
-     * EL siguiente requerimiento funcional permite cerrar la sesion activa de un usuario autenticado
-     * en la plataforma u editor de modo que se evalua la existencia de un usuario activo para, en
-     * caso de existir cerrar su sesion y, en caso de no existir no cerrar ninguna sesion.
+     * EL siguiente metodo (como parte del requerimiento funcional authentication) permite cerrar la sesion
+     * activa de un usuario autenticado en la plataforma u editor de modo que se evalua la existencia de un
+     * usuario activo para, en caso de existir cerrar su sesion y, en caso de no existir no cerrar ninguna sesion.
      * Retorna un boolean de acuerdo a si la operacion fue realizada correctamente o no.
      */
     public boolean logout(){
@@ -468,6 +473,7 @@ public class ParadigmaDocs {
         if(existeUsuarioActivo()) {
             int i;
             int j;
+            boolean revisado = false;
 
             // Se buscan los documentos de acuerdo a su autor y/o acceso
             for (i = 0; i < this.listaDocumentos.size(); i++) {
@@ -476,12 +482,15 @@ public class ParadigmaDocs {
                     // Se busca en las versiones el texto introducido
                     for (j = 0; j < this.listaDocumentos.get(i).getListaVersiones().size(); j++) {
                         // Si existe en el documento (versiones) el texto a buscar...
-                        if (this.listaDocumentos.get(i).getListaVersiones().get(j).getTextoContenido().contains(textoBuscar)) {
+                        if (this.listaDocumentos.get(i).getListaVersiones().get(j).getTextoContenido().contains(textoBuscar) && revisado == false) {
                             System.out.println("El texto introducido se encuentra en el documento de ID " +
                                     this.listaDocumentos.get(i).getiDdocumento() + " y nombre " +
                                     this.listaDocumentos.get(i).getNombreDocumento());
+                            revisado = true;
+
                         }
                     }
+                    revisado = false;
                 }
             }
         }
@@ -491,13 +500,13 @@ public class ParadigmaDocs {
     }
 
     /**
-     * EL siguiente requerimiento funcional permite a un usuario autenticado o no generar una representacion visual
-     * comprensible (String) la cual exprese, en caso de que un usuario autenticado ejecute, todos los datos referentes
-     * a dicho usuario, es decir, credenciales relativas, documentos propios y compartidos.
-     * Por otra parte, en caso de que un usuario no autenticado ejecute el presente metodo, se expresan todos los datos
-     * referentes a la plataforma u editor.
-     * Proceso que genera una representacion visual de la plataforma de acuerdo a la existencia o no de un usuario
-     * activo/autenticado.
+     * EL siguiente metodo (como parte del requerimiento funcional visualize) permite a un usuario autenticado o no
+     * generar una representacion visual comprensible (String) la cual exprese, en caso de que un usuario autenticado
+     * ejecute, todos los datos referentes a dicho usuario, es decir, credenciales relativas, documentos propios y
+     * compartidos. Por otra parte, en caso de que un usuario no autenticado ejecute el presente metodo, se expresan
+     * todos los datos referentes a la plataforma u editor.
+     * Retorna un String correspondiente a una representacion visual de la plataforma de acuerdo a la existencia
+     * o no de un usuario activo/autenticado.
      */
     public String editorToString(){
         // Si existe un usuario autenticado u activo...
@@ -547,15 +556,83 @@ public class ParadigmaDocs {
 
     }
 
+    /**
+     * EL siguiente metodo (como parte del requerimiento funcional visualize) imprime por pantalla el String
+     * obtenido del metodo editorToString evitando expresar datos sensibles.
+     * Proceso que muestra una representacion visual de la plataforma.
+     */
     public void printEditor(String editorString){
         System.out.println(editorString);
     }
 
+    /**
+     * EL siguiente requerimiento funcional llama a los metodos editorToString en paralelo con printEditor,
+     * ya explicados anteriormente, de modo que se genera e imprime un String como representacion
+     * visual de la plaaforma.
+     */
     public void visualize(){
         printEditor(editorToString());
     }
 
+    /**
+     * EL siguiente requerimiento funcional permite eliminar los ultimos N caracteres del contenido en un documentos
+     * en la plataforma u editor (considerando la version actual) de modo que se evalua la existencia de un usuario
+     * activo, luego considerando los parametros de entrada ingresados por pantalla, se busca el documento
+     * (en caso de existir) donde el usuario activo figure como autor o se le haya compartido, con permiso de escritura
+     * ("W"), para extraer el contenido del documento que cumpla dichas condiciones. Referente al texto se realiza
+     * una comparacion entre la longitud del texto contenido y la cantidad de caracteres a eliminar, en caso de que
+     * la longitud del texto contenido sea mayor a la cantidad de caracteres a eliminar, por medio de la funcion
+     * substring se extrar el substring desde el indice (0) hasta la diferencia entre las longitudes. En caso de que
+     * la cantidad de caracteres a eliminar sea mayor a la cantidad de caracteres existentes en el contenido del
+     * documento, se elimina todo el contenido. Es importante comentar que tras la eliminacion se genera una nueva
+     * version del documento.
+     * Proceso que elimina los ultimo N caracteres del contenido de un documento (version actual) en la plataforma.
+     */
+    public void delete(int iDdocumento, int cantCaracElim){
 
+        // Se contempla la existencia de un usuario activo
+        if(existeUsuarioActivo()) {
+            int i;
+            // Se busca el documento de acuerdo a su identificador
+            for (i = 0; i < this.listaDocumentos.size(); i++) {
+                if (this.listaDocumentos.get(i).getiDdocumento() == iDdocumento) {
+                    if (existeDocumentoAutor(iDdocumento, nombreUsuarioActivo()) || existeDocumentoEditor(this.listaDocumentos.get(i).getListaAccesos(), nombreUsuarioActivo())) {
+
+                        Version nuevaVersion = new Version();
+                        String textoUltimaVersion;
+                        Date fechaModificacion = new Date();
+                        int longitudVersiones = this.listaDocumentos.get(i).getListaVersiones().size() - 1;
+                        textoUltimaVersion = this.listaDocumentos.get(i).getListaVersiones().get(longitudVersiones).getTextoContenido();
+                        int longitudString = this.listaDocumentos.get(i).getListaVersiones().get(longitudVersiones).getTextoContenido().length();
+
+                        // La cantidad de caracteres contenidos en la version actual del documento es mayor/igual a la
+                        // cantidad de caracteres a eliminar (es posible eliminar)
+                        if(longitudString >= cantCaracElim){
+                            textoUltimaVersion = textoUltimaVersion.substring(0, longitudString - cantCaracElim);
+                            nuevaVersion.Version(longitudVersiones + 1, textoUltimaVersion, fechaModificacion);
+                            this.listaDocumentos.get(i).getListaVersiones().add(nuevaVersion);
+                            System.out.println("Se han eliminado " + cantCaracElim + " caracteres resultando en el siguiente contenido: " +
+                                    textoUltimaVersion);
+                        }
+                        // Debe eliminarse todo
+                        else{
+                            textoUltimaVersion = "";
+                            nuevaVersion.Version(longitudVersiones + 1, textoUltimaVersion, fechaModificacion);
+                            this.listaDocumentos.get(i).getListaVersiones().add(nuevaVersion);
+                            System.out.println("Se ha eliminado todo el contenido del documento (la cantidad de caracteres a" +
+                                    " eliminar es supuerior a la cantidad de caracteres existentes en el contenido del " +
+                                    "documento)");
+                        }
+
+                    }
+                }
+            }
+        }
+        else {
+            System.out.println("No se ha eliminado los N caracteres del texto del documento (usuario inexistente o no autenticado)");
+        }
+
+    }
 
 
 
