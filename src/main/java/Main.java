@@ -67,19 +67,20 @@ public class Main {
             }
             // Se imprime por pantalla las opciones a disposicion
             System.out.println("Escoja una de las siguientes opciones");
-            System.out.println("Para registrar un nuevo usuario ingrese:                                  1");
-            System.out.println("Para autenticar un usuario ingrese:                                       2");
-            System.out.println("Para cerrar sesion de usuario ingrese:                                    3");
-            System.out.println("Para crear un nuevo documento ingrese:                                    4");
-            System.out.println("Para compartir un documento ingrese:                                      5");
-            System.out.println("Para aniadir texto a un documentos ingrese:                               6");
-            System.out.println("Para ejecutar el metodo rollback a la version de un documento ingrese:    7");
-            System.out.println("Para revocar los accesos a un documento ingrese:                          8");
-            System.out.println("Para buscar un texto especifico en un documento ingrese:                  9");
-            System.out.println("Para ejecutar el metodo visualize ingrese:                                10");
-            System.out.println("Para eliminar N caracteres del contenido de un documento ingrese:         11");
+            System.out.println("Para registrar un nuevo usuario ingrese:                                          1");
+            System.out.println("Para autenticar un usuario ingrese:                                               2");
+            System.out.println("Para cerrar sesion de usuario ingrese:                                            3");
+            System.out.println("Para crear un nuevo documento ingrese:                                            4");
+            System.out.println("Para compartir un documento ingrese:                                              5");
+            System.out.println("Para aniadir texto a un documentos ingrese:                                       6");
+            System.out.println("Para ejecutar el metodo rollback a la version de un documento ingrese:            7");
+            System.out.println("Para revocar los accesos a un documento ingrese:                                  8");
+            System.out.println("Para buscar un texto especifico en un documento ingrese:                          9");
+            System.out.println("Para ejecutar el metodo visualize ingrese:                                        10");
+            System.out.println("Para eliminar N caracteres del contenido de un documento ingrese:                 11");
+            System.out.println("Para buscar y reemplazar una palabra en el contenido de un documento ingrese:     12");
 
-            System.out.println("Para cerrar el programa ingrese:                                          12");
+            System.out.println("Para cerrar el programa ingrese:                                                  13");
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
 
@@ -249,6 +250,20 @@ public class Main {
                     break;
                 case 12:
                     System.out.println("Se ha seleccionado la opcion 12");
+
+                    Scanner parametrosCase12 = new Scanner(System.in);
+                    System.out.println("Ingrese el ID del documento a trabajar: ");
+                    int iDdocumentoCase12 = entrada.nextInt();
+                    System.out.println("Ingrese la palabra a buscar en el contenido: ");
+                    String textoBuscarCase12 = parametrosCase12.nextLine();
+                    System.out.println("Ingrese la palabra a reemplazar en el contenido: ");
+                    String textoReemplazarCase12 = parametrosCase12.nextLine();
+
+                    paradigmaDocs.searchAndReplace(iDdocumentoCase12, textoBuscarCase12, textoReemplazarCase12);
+
+                    break;
+                case 13:
+                    System.out.println("Se ha seleccionado la opcion 13");
 
                     cerrarPrograma = true;
                     break;

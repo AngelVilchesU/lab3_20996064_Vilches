@@ -21,6 +21,7 @@ public class Acceso {
         return this;
     }
 
+
     // Metodos
 
     /**
@@ -49,10 +50,7 @@ public class Acceso {
         char escribir = 'W';
         char compartir = 'C';
 
-        if(tipoAcceso == leer || tipoAcceso == escribir || tipoAcceso == compartir){
-            return true;
-        }
-        return false;
+        return tipoAcceso == leer || tipoAcceso == escribir || tipoAcceso == compartir;
     }
 
 

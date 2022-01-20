@@ -121,10 +121,7 @@ public class ParadigmaDocs {
      * Retorna un boolean correspondiente a la verificacion de si el usuario esta activo o no.
      */
     public boolean esUsuarioActivo(Usuario usuario){
-        if(usuario.getSesion()){
-            return true;
-        }
-        return false;
+        return usuario.getSesion();
     }
 
     /**
@@ -295,7 +292,7 @@ public class ParadigmaDocs {
      * En caso de no cumplir con cualquier condicion, el documento no es compartido.
      * Proceso que comparte a uno o mas usuarios un documento en la plataforma.
      */
-    public void share(ArrayList usuariosCompartir, int iDdocumento, char permiso){
+    public void share(ArrayList<String> usuariosCompartir, int iDdocumento, char permiso){
 
         // Se contempla la existencia de un usuario activo
         if(existeUsuarioActivo()) {
@@ -311,7 +308,7 @@ public class ParadigmaDocs {
                     // Se elabora un arreglo de objetos del tipo Acceso
                     for (i = 0; i < usuariosCompartir.size(); i++) {
                         Acceso aCceso = new Acceso();
-                        aCceso.Acceso(usuariosCompartir.get(i).toString(), permiso);
+                        aCceso.Acceso(usuariosCompartir.get(i), permiso);
                         listaAccesos.add(aCceso);
                     }
                     // Se busca el documento y se ingresa el acceso
@@ -398,7 +395,6 @@ public class ParadigmaDocs {
                         // e insertada al final de la lista u arreglo de versiones como la version actual
                         int j;
 
-                        int iDultimaversion = this.listaDocumentos.get(i).getListaVersiones().size() - 1;
                         for (j = 0; j < this.listaDocumentos.get(i).getListaVersiones().size(); j++) {
                             if (this.listaDocumentos.get(i).getListaVersiones().get(j).getiDversion() == iDversion) {
                                 Version versionRollback = new Version();
@@ -441,7 +437,6 @@ public class ParadigmaDocs {
                 if (this.listaDocumentos.get(i).getiDdocumento() == iDdocumento) {
                     // Si el usuario que ha ejecutado el presente metodo figura como autor del texto...
                     if (existeDocumentoAutor(iDdocumento, nombreUsuarioActivo())) {
-                        Acceso accesosRevocado = new Acceso();
                         this.listaDocumentos.get(i).getListaAccesos().clear();
                         System.out.println("Se han revocado todos los permisos en el documento ID: " + iDdocumento +
                                 " por parte de su autor");
@@ -482,7 +477,7 @@ public class ParadigmaDocs {
                     // Se busca en las versiones el texto introducido
                     for (j = 0; j < this.listaDocumentos.get(i).getListaVersiones().size(); j++) {
                         // Si existe en el documento (versiones) el texto a buscar...
-                        if (this.listaDocumentos.get(i).getListaVersiones().get(j).getTextoContenido().contains(textoBuscar) && revisado == false) {
+                        if (this.listaDocumentos.get(i).getListaVersiones().get(j).getTextoContenido().contains(textoBuscar) && !revisado) {
                             System.out.println("El texto introducido se encuentra en el documento de ID " +
                                     this.listaDocumentos.get(i).getiDdocumento() + " y nombre " +
                                     this.listaDocumentos.get(i).getNombreDocumento());
@@ -596,6 +591,7 @@ public class ParadigmaDocs {
             // Se busca el documento de acuerdo a su identificador
             for (i = 0; i < this.listaDocumentos.size(); i++) {
                 if (this.listaDocumentos.get(i).getiDdocumento() == iDdocumento) {
+                    // Si el usuario activo es autor o posee permiso de edicion sobre el documento...
                     if (existeDocumentoAutor(iDdocumento, nombreUsuarioActivo()) || existeDocumentoEditor(this.listaDocumentos.get(i).getListaAccesos(), nombreUsuarioActivo())) {
 
                         Version nuevaVersion = new Version();
@@ -622,6 +618,7 @@ public class ParadigmaDocs {
                             System.out.println("Se ha eliminado todo el contenido del documento (la cantidad de caracteres a" +
                                     " eliminar es supuerior a la cantidad de caracteres existentes en el contenido del " +
                                     "documento)");
+                            System.out.println(this.listaDocumentos.get(i).getListaVersiones());
                         }
 
                     }
@@ -633,6 +630,55 @@ public class ParadigmaDocs {
         }
 
     }
+
+
+    public void searchAndReplace(int iDdocumento, String textoBuscar, String textoReemplazar){
+
+        // Se contempla la existencia de un usuario activo
+        if(existeUsuarioActivo()) {
+            int i;
+            // Se busca el documento de acuerdo a su identificador
+            for (i = 0; i < this.listaDocumentos.size(); i++) {
+                if (this.listaDocumentos.get(i).getiDdocumento() == iDdocumento) {
+                    // Si el usuario activo es autor o posee permiso de edicion sobre el documento...
+                    if (existeDocumentoAutor(iDdocumento, nombreUsuarioActivo()) || existeDocumentoEditor(this.listaDocumentos.get(i).getListaAccesos(), nombreUsuarioActivo())) {
+
+                        Version nuevaVersion = new Version();
+                        int longitudVersiones = this.listaDocumentos.get(i).getListaVersiones().size() - 1;
+                        String textoUltimaVersion = this.listaDocumentos.get(i).getListaVersiones().get(longitudVersiones).getTextoContenido();
+                        Date fechaModificacion = new Date();
+
+                        // Si el contenido del documento posee al texto que debemos buscar para reemplazar...
+                        if(textoUltimaVersion.contains(textoBuscar)) {
+                            textoUltimaVersion = textoUltimaVersion.replaceAll(textoBuscar, textoReemplazar);
+                            nuevaVersion.Version(longitudVersiones + 1, textoUltimaVersion, fechaModificacion);
+                            this.listaDocumentos.get(i).getListaVersiones().add(nuevaVersion);
+                            System.out.println("Se ha reemplazado la palabra ingresada: '" + textoBuscar +
+                                    "', por: '" + textoReemplazar + "' correctamente en el documento ID: " + iDdocumento);
+                        }
+                        // Si el contenido del documento no posee al texto que debemos buscar para reemplazar...
+                        else {
+                            System.out.println("Advertencia: La palabra a reemplazar ingresada: '" + textoBuscar +
+                                    "', por: '" + textoReemplazar + "' no existe/figura en el documento ID: " + iDdocumento);
+                        }
+
+
+
+
+
+                    }
+                }
+            }
+        }
+        else {
+            System.out.println("No se ha reemplazado el texto ingresado en el contenido del documento (usuario inexistente o no autenticado)");
+        }
+
+
+
+
+    }
+
 
 
 
