@@ -17,12 +17,11 @@ public class Usuario {
     private boolean sesion;
 
     // Constructor
-    public Usuario Usuario(String nombreUsuario, String contraseniaUsuario, Date fechaCreacion, boolean sesion){
+    public Usuario(String nombreUsuario, String contraseniaUsuario, Date fechaCreacion, boolean sesion){
         this.nombreUsuario = nombreUsuario;
         this.contraseniaUsuario = contraseniaUsuario;
         this.fechaCreacion = fechaCreacion;
         this.sesion = sesion;
-        return this;
     }
 
     // Metodos

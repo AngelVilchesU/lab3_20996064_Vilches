@@ -13,7 +13,7 @@ public class Main {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         ArrayList<Documento> listaDocumentos = new ArrayList<>();
 
-        ParadigmaDocs paradigmaDocs = new ParadigmaDocs().ParadigmaDocs("ParadigmaDocs", fechaCreacion, listaUsuarios, listaDocumentos);
+        ParadigmaDocs paradigmaDocs = new ParadigmaDocs("ParadigmaDocs", fechaCreacion, listaUsuarios, listaDocumentos);
 
         // Registro de cinco usuarios (inicialmente)
         paradigmaDocs.register("Jaime L.", "pinturaseca");
@@ -67,20 +67,20 @@ public class Main {
             }
             // Se imprime por pantalla las opciones a disposicion
             System.out.println("Escoja una de las siguientes opciones");
-            System.out.println("Para registrar un nuevo usuario ingrese:                                          1");
-            System.out.println("Para autenticar un usuario ingrese:                                               2");
-            System.out.println("Para cerrar sesion de usuario ingrese:                                            3");
-            System.out.println("Para crear un nuevo documento ingrese:                                            4");
-            System.out.println("Para compartir un documento ingrese:                                              5");
-            System.out.println("Para aniadir texto a un documentos ingrese:                                       6");
-            System.out.println("Para ejecutar el metodo rollback a la version de un documento ingrese:            7");
-            System.out.println("Para revocar los accesos a un documento ingrese:                                  8");
-            System.out.println("Para buscar un texto especifico en un documento ingrese:                          9");
-            System.out.println("Para ejecutar el metodo visualize ingrese:                                        10");
-            System.out.println("Para eliminar N caracteres del contenido de un documento ingrese:                 11");
-            System.out.println("Para buscar y reemplazar una palabra en el contenido de un documento ingrese:     12");
+            System.out.println("Para registrar un nuevo usuario ingrese.......................................... 1");
+            System.out.println("Para autenticar un usuario ingrese............................................... 2");
+            System.out.println("Para cerrar sesion de usuario ingrese............................................ 3");
+            System.out.println("Para crear un nuevo documento ingrese............................................ 4");
+            System.out.println("Para compartir un documento ingrese.............................................. 5");
+            System.out.println("Para aniadir texto a un documentos ingrese....................................... 6");
+            System.out.println("Para restaurar una version antigua de un documento ingrese....................... 7");
+            System.out.println("Para revocar todos los accesos a un documento ingrese............................ 8");
+            System.out.println("Para buscar un texto especifico en un documento ingrese.......................... 9");
+            System.out.println("Para ejecutar el metodo visualize ingrese........................................ 10");
+            System.out.println("Para eliminar N caracteres del contenido de un documento ingrese................. 11");
+            System.out.println("Para buscar y reemplazar una palabra en el contenido de un documento ingrese..... 12");
 
-            System.out.println("Para cerrar el programa ingrese:                                                  13");
+            System.out.println("Para cerrar el programa ingrese.................................................. 13");
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
 
@@ -127,9 +127,9 @@ public class Main {
                     System.out.println("Se ha seleccionado la opcion 4");
 
                     Scanner parametrosCase4 = new Scanner(System.in);
-                    System.out.println("Introduzca el nombre del documento (String): ");
+                    System.out.println("Introduzca el nombre del documento: ");
                     String nombreDocumentoCase4 = parametrosCase4.nextLine();
-                    System.out.println("Introduzca el contenido del documento (String): ");
+                    System.out.println("Introduzca el contenido del documento: ");
                     String textoContenidoCase4 = parametrosCase4.nextLine();
 
                     paradigmaDocs.create(nombreDocumentoCase4, textoContenidoCase4);
@@ -162,10 +162,10 @@ public class Main {
 
                         // Se verifica que el/los usuario/s a compartir exista/n
                         if (paradigmaDocs.existeNombreUsuario(nombreUsuarioCase5)) {
-                            System.out.println("Es posible compartir el documento al/los usuario/s designado/s");
+                            System.out.println("Es posible compartir el documento al usuario designado");
                             listaUsuariosCompartir.add(nombreUsuarioCase5);
                         } else {
-                            System.out.println("No posible compartir el documento al/los usuario/s designado/s");
+                            System.out.println("No es posible compartir el documento al usuario designado");
                         }
 
                         switch (agregarCompartido) {
@@ -240,7 +240,6 @@ public class Main {
                 case 11:
                     System.out.println("Se ha seleccionado la opcion 11");
 
-                    Scanner parametrosCase11 = new Scanner(System.in);
                     System.out.println("Ingrese el ID del documento a trabajar: ");
                     int iDdocumentoCase11 = entrada.nextInt();
                     System.out.println("Ingrese la cantidad de caracteres a eliminar del contenido: ");

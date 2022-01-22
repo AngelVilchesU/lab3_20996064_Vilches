@@ -15,11 +15,13 @@ public class Acceso {
 
     // Constructor
 
-    public Acceso Acceso(String nombreUsuario, char tipoAcceso){
+    public Acceso(String nombreUsuario, char tipoAcceso){
         this.nombreUsuario = nombreUsuario;
         this.tipoAcceso = tipoAcceso;
-        return this;
     }
+
+
+    public Acceso() {}
 
 
     // Metodos

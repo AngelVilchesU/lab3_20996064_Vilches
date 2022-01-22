@@ -16,11 +16,11 @@ public class Documento {
     private String autor;
     private String nombreDocumento;
     private Date fechaCreacion;
-    private ArrayList<Version> listaVersiones = new ArrayList<>();
-    private ArrayList<Acceso> listaAccesos = new ArrayList<>();
+    private ArrayList<Version> listaVersiones;
+    private ArrayList<Acceso> listaAccesos;
 
     // Constructor
-    public Documento Documento(int iDdocumento, String autor, String nombreDocumento, Date fechaCreacion,
+    public Documento (int iDdocumento, String autor, String nombreDocumento, Date fechaCreacion,
                                     ArrayList<Version> listaVersiones, ArrayList<Acceso> listaAccesos){
         this.iDdocumento = iDdocumento;
         this.autor = autor;
@@ -28,7 +28,7 @@ public class Documento {
         this.fechaCreacion = fechaCreacion;
         this.listaVersiones = listaVersiones;
         this.listaAccesos = listaAccesos;
-        return this;
+
     }
 
     // Metodos
@@ -72,6 +72,26 @@ public class Documento {
     public ArrayList<Acceso> getListaAccesos(){
         return listaAccesos;
     }
+
+    /**
+     * EL siguiente metodo permite aniadir una nueva version al arreglo de objetos tipo Version de acuerdo con
+     * el concepto de agregacion.
+     * Proceso que permite adicionar un objeto del tipo Version al arreglo
+     */
+    public void agregarVersion(Version version){
+        this.listaVersiones.add(version);
+    }
+
+    /**
+     * EL siguiente metodo permite aniadir un nuevo acceso al arreglo de objetos tipo Acceso de acuerdo con
+     * el concepto de agregacion.
+     * Proceso que permite adicionar un objeto del tipo Acceso al arreglo
+     */
+    public void agregarAcceso(ArrayList<Acceso> acceso){
+        this.listaAccesos.addAll(acceso);
+    }
+
+
 
     /**
      * EL siguiente metodo permite representar un Documento como un String.

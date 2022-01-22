@@ -16,11 +16,10 @@ public class Version {
     private Date fechaModificacion;
 
     // Constructor
-    public Version Version(int iDversion, String textoContenido, Date fechaModificacion){
+    public Version(int iDversion, String textoContenido, Date fechaModificacion){
         this.iDversion = iDversion;
         this.textoContenido = textoContenido;
         this.fechaModificacion = fechaModificacion;
-        return this;
     }
 
     // Metodos
