@@ -161,7 +161,7 @@ public class ParadigmaDocs {
      * de modo que al finalizar el proceso el arreglo sea correlativo (identificador).
      * Proceso que "ordena" los identificadores del arreglo de versiones.
      */
-    private void correlativo(ArrayList<Version> listaVersiones){
+    public void correlativo(ArrayList<Version> listaVersiones){
         int i;
         for (i = 0; i < listaVersiones.size(); i ++){
             listaVersiones.get(i).setiDversion(i);

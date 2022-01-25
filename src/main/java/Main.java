@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Zona que contempla el menu interactivo en paralelo con la creacion del editor (paradigmaDocs), cinco
+ * usuarios y diez documentos inicialmente segun lo solicitado. Se contempla un ciclo iterativo dirigido
+ * por el usuario de acuerdo a sus elecciones y/o preferencias.
+ * @author Angel Vilches
+ */
 
 public class Main {
     public static void main(String[] args){
@@ -51,6 +57,7 @@ public class Main {
 
         // Menu interactivo
 
+        // Variables de control
         Scanner entrada = new Scanner(System.in);
         boolean cerrarPrograma = false;
         int eleccion;
@@ -84,9 +91,11 @@ public class Main {
             System.out.println("Introduzca su eleccion: ");
             eleccion = entrada.nextInt();
 
-            // Se evalua la eleccion introducida
+            // Se evalua la eleccion introducida contemplando la mitigacion un posible error de tipeo para no
+            // afectar el proceso de ejecucion
             switch(eleccion){
                 case 1:
+                    // authentication - register
                     System.out.println("Se ha seleccionado la opcion 1");
 
                     Scanner parametrosCase1 = new Scanner(System.in);
@@ -102,6 +111,7 @@ public class Main {
                     }
                     break;
                 case 2:
+                    // authentication - login
                     System.out.println("Se ha seleccionado la opcion 2");
 
                     Scanner parametrosCase2 = new Scanner(System.in);
@@ -114,6 +124,7 @@ public class Main {
 
                     break;
                 case 3:
+                    // authentication - logout
                     System.out.println("Se ha seleccionado la opcion 3");
 
                     if(paradigmaDocs.logout()){
@@ -124,6 +135,7 @@ public class Main {
                     }
                     break;
                 case 4:
+                    // create
                     System.out.println("Se ha seleccionado la opcion 4");
 
                     Scanner parametrosCase4 = new Scanner(System.in);
@@ -135,6 +147,7 @@ public class Main {
                     paradigmaDocs.create(nombreDocumentoCase4, textoContenidoCase4);
                     break;
                 case 5:
+                    // share
                     System.out.println("Se ha seleccionado la opcion 5");
 
                     // Se inicia un proceso en donde se consulta por los usuarios a compartir filtrando
@@ -191,6 +204,7 @@ public class Main {
                     paradigmaDocs.share(listaUsuariosCompartir, iDdocumentoCase5, tipoAccesoCase5);
                     break;
                 case 6:
+                    // add
                     System.out.println("Se ha seleccionado la opcion 6");
 
                     Scanner parametrosCase6 = new Scanner(System.in);
@@ -202,6 +216,7 @@ public class Main {
                     paradigmaDocs.add(iDdocumentoCase6, textoContenidoCase6);
                     break;
                 case 7:
+                    // rollback
                     System.out.println("Se ha seleccionado la opcion 7");
 
                         Scanner parametrosCase7 = new Scanner(System.in);
@@ -213,6 +228,7 @@ public class Main {
                         paradigmaDocs.rollback(iDdocumentoCase7, iDversionCase7);
                     break;
                 case 8:
+                    // revokeAccess
                     System.out.println("Se ha seleccionado la opcion 8");
 
                         System.out.println("Ingrese el identificador del documento sobre el cual operar: ");
@@ -222,6 +238,7 @@ public class Main {
 
                     break;
                 case 9:
+                    // search
                     System.out.println("Se ha seleccionado la opcion 9");
 
                     Scanner parametrosCase9 = new Scanner(System.in);
@@ -232,12 +249,15 @@ public class Main {
 
                     break;
                 case 10:
+                    // visualize, es importante comentar que las dos funcionalidades llamadas por
+                    // visualize son ejecutadas en paralelo segun lo expresado en las instrucciones del proyecto
                     System.out.println("Se ha seleccionado la opcion 10");
 
                     paradigmaDocs.visualize();
 
                     break;
                 case 11:
+                    // delete
                     System.out.println("Se ha seleccionado la opcion 11");
 
                     System.out.println("Ingrese el ID del documento a trabajar: ");
@@ -248,6 +268,7 @@ public class Main {
                     paradigmaDocs.delete(iDdocumentoCase11, cantCaracElimCase11);
                     break;
                 case 12:
+                    // searchAndReplace
                     System.out.println("Se ha seleccionado la opcion 12");
 
                     Scanner parametrosCase12 = new Scanner(System.in);
@@ -262,11 +283,13 @@ public class Main {
 
                     break;
                 case 13:
+                    // FINALIZACION DE LA EJECUCION DEL PROGRAMA
                     System.out.println("Se ha seleccionado la opcion 13");
 
                     cerrarPrograma = true;
                     break;
                 default:
+                    // EN CASO DE SELECCIONAR UNA OPCION NO VALIDA (error de tipeo)
                     System.out.println("Favor de seleccionar una opcion valida");
             }
         }
